@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class CameraResolution : MonoBehaviour
 {
-
+    public static Vector3 screenLeftBottom;
+    public static Vector3 screenRightTop; 
     private void Awake()
     {
         Camera camera = GetComponent<Camera>();
 
+        screenLeftBottom = camera.ScreenToWorldPoint(new Vector3(0,0,0));
+        screenRightTop = camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        
         Rect rect = camera.rect;
 
 

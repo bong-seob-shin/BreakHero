@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CharcterController : MonoBehaviour
+public class CharcterController : MoveObject
 {
     [SerializeField]
     private Vector3 _targetPos;
@@ -12,7 +12,11 @@ public class CharcterController : MonoBehaviour
 
     private float _moveSpeed;
 
+    private bool _isClickHold;
+    
     public GameObject bullet;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -24,33 +28,45 @@ public class CharcterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        
+        
+        ClickInput()
+        
+        
+       
+        
+    }
+
+    void ClickInput()
+    {
+        _isClickHold = Input.GetMouseButton(0);
+
+        if(_isClickHold) 
+            Move();
+        
         if (Input.GetMouseButtonDown(0))
         {
-            SetTarget(Input.mousePosition);
-            Attack();
+            _targetPos = _camera.ScreenToWorldPoint(Input.mousePosition);
+            if (AABBCollisionCheck(new Vector2(_targetPos.x,_targetPos.y)))
+            {
+                Attack();
+            }
         }
-        
-    }
 
-    void SetTarget(Vector3 mousePos)
-    {
-        _targetPos = _camera.ScreenToWorldPoint(mousePos);
+        if (Input.touchCount > 0)
+        {
+            _targetPos = _camera.ScreenToWorldPoint(Input.GetTouch(0).position);
+            if (AABBCollisionCheck(new Vector2(_targetPos.x,_targetPos.y)))
+            {
+                Attack();
+            }
+        }
     }
-
-    void Move()
+    protected override void Move()
     {
-        Vector3 targetVec3 = new Vector3(_targetPos.x,_targetPos.y,0) - transform.position;
-        Vector3 targetDir = targetVec3.normalized;
-        
-        if (targetVec3.sqrMagnitude > 0.01f)
-        {
-            transform.position = transform.position+ _moveSpeed * targetDir * Time.deltaTime;
-        }
-        else
-        {
-            transform.position = new Vector3(_targetPos.x,_targetPos.y,0);
-        }
+        _targetPos = _camera.ScreenToWorldPoint(Input.mousePosition);
+
+        transform.position = new Vector3(_targetPos.x, _targetPos.y, 0);
     }
 
     void Attack()

@@ -15,5 +15,9 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         transform.position += Vector3.up * bulletspeed * Time.deltaTime;
+        if (CameraResolution.screenRightTop.y < transform.position.y)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
