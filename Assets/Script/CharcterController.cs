@@ -39,20 +39,20 @@ public class CharcterController : MoveObject
 
     void ClickInput()
     {
-        _isClickHold = Input.GetMouseButton(0);
-
         if(_isClickHold) 
             Move();
-        
+#if UNITY_EDITOR
+        _isClickHold = Input.GetMouseButton(0);
         if (Input.GetMouseButtonDown(0))
         {
             _targetPos = _camera.ScreenToWorldPoint(Input.mousePosition);
-            if (AABBCollisionCheck(new Vector2(_targetPos.x,_targetPos.y)))
+            if (AABBCollisionCheck(new Vector2(_targetPos.x, _targetPos.y)))
             {
                 Attack();
             }
         }
-
+#endif
+        
         if (Input.touchCount > 0)
         {
             _targetPos = _camera.ScreenToWorldPoint(Input.GetTouch(0).position);
