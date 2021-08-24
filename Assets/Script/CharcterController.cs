@@ -28,13 +28,13 @@ public class CharcterController : MoveObject
     // Update is called once per frame
     void Update()
     {
-        
-        
-        ClickInput()
-        
-        
-       
-        
+
+
+        ClickInput();
+
+
+
+
     }
 
     void ClickInput()
