@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class MoveObject : MonoBehaviour
 {
-    private float _HP;
-    private float _speed;
-    private float _damage;
-    private float _width;
-    private float _height;
+    protected float _HP;
+    protected float _speed;
+    protected float _damage;
+    protected float _width;
+    protected float _height;
 
     
-    private SpriteRenderer _spriteRenderer;
+    protected SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
@@ -20,7 +20,8 @@ public class MoveObject : MonoBehaviour
         Vector2 spriteSize = _spriteRenderer.size;
         _width = spriteSize.x;
         _height = spriteSize.y;
-        
+        Debug.Log("부모 awake불림");
+
     }
 
     protected virtual void Move()

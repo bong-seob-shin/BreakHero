@@ -10,19 +10,19 @@ public class CharcterController : MoveObject
     
     private Camera _camera;
 
-    private float _moveSpeed;
 
     private bool _isClickHold;
     
     public GameObject bullet;
-    
+
     
     // Start is called before the first frame update
     void Start()
     {
         _targetPos = transform.position;
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        _moveSpeed = 3.0f;
+        this._width = this._width * 2;
+        
     }
 
     // Update is called once per frame
@@ -42,31 +42,55 @@ public class CharcterController : MoveObject
         if(_isClickHold) 
             Move();
 #if UNITY_EDITOR
-        _isClickHold = Input.GetMouseButton(0);
         if (Input.GetMouseButtonDown(0))
         {
             _targetPos = _camera.ScreenToWorldPoint(Input.mousePosition);
             if (AABBCollisionCheck(new Vector2(_targetPos.x, _targetPos.y)))
             {
                 Attack();
+                Debug.Log(this._width);
             }
         }
-#endif
-        
+
+        if (Input.GetMouseButton(0))
+        {
+            if (AABBCollisionCheck(new Vector2(_targetPos.x, _targetPos.y)))
+            {
+                _isClickHold = true;
+
+            }
+
+        }
+        else
+        {
+            _isClickHold = false;
+        }
+#elif UNITY_ANDROID
         if (Input.touchCount > 0)
         {
             _targetPos = _camera.ScreenToWorldPoint(Input.GetTouch(0).position);
-            if (AABBCollisionCheck(new Vector2(_targetPos.x,_targetPos.y)))
+            if (AABBCollisionCheck(new Vector2(_targetPos.x, _targetPos.y)))
             {
                 Attack();
+                _isClickHold = true;
+
             }
         }
+        else
+        {
+            Debug.Log("엘스불림");
+
+            _isClickHold = false;
+
+        }
+#endif
     }
     protected override void Move()
     {
         _targetPos = _camera.ScreenToWorldPoint(Input.mousePosition);
-
-        transform.position = new Vector3(_targetPos.x, _targetPos.y, 0);
+        
+        if(_targetPos.x>CameraResolution.screenLeftBottom.x&&_targetPos.x<CameraResolution.screenRightTop.x)
+            transform.position = new Vector3(_targetPos.x, -4.0f, 0);
     }
 
     void Attack()
