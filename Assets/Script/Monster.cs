@@ -17,8 +17,8 @@ public class Monster : MoveObject
         {
             if (collsionList[i].GetType() == typeof(Bullet))
             {
-                if(AABBCollisionCheck(collsionList[i]))
-                    Debug.Log("monster Collision!!");
+                // if(AABBCollisionCheck(collsionList[i]))
+                //     Debug.Log("monster Collision!!");
             }
         }
         

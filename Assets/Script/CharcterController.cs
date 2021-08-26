@@ -21,7 +21,7 @@ public class CharcterController : MoveObject
     {
         _targetPos = transform.position;
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        
+        //_height = _height * 1.5f;
     }
 
     // Update is called once per frame
