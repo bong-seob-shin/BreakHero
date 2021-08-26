@@ -14,14 +14,15 @@ public class MoveObject : MonoBehaviour
     
     protected SpriteRenderer _spriteRenderer;
 
+    public static List<MoveObject> collsionList = new List<MoveObject>();
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         Vector2 spriteSize = _spriteRenderer.size;
         _width = spriteSize.x;
         _height = spriteSize.y;
-        Debug.Log("부모 awake불림");
-
+        collsionList.Add(this);
+       
     }
 
     protected virtual void Move()
@@ -48,4 +49,22 @@ public class MoveObject : MonoBehaviour
         return true;
     }
 
+    protected void DestroyColObj(MoveObject mo)
+    {
+        int deleteIndex = -1;
+        for (int i = 0; i < collsionList.Count; i++)
+        {
+            if (collsionList[i] == mo)
+            {
+                deleteIndex = i;
+                break;
+            }
+        }
+
+        if (deleteIndex > -1)
+        {
+            Destroy(collsionList[deleteIndex].gameObject);
+            collsionList.RemoveAt(deleteIndex);
+        }
+    }
 }

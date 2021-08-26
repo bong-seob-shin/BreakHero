@@ -47,7 +47,6 @@ public class CharcterController : MoveObject
             if (AABBCollisionCheck(new Vector2(_targetPos.x, _targetPos.y)))
             {
                 Attack();
-                Debug.Log(this._width);
             }
         }
 
@@ -77,8 +76,6 @@ public class CharcterController : MoveObject
         }
         else
         {
-            Debug.Log("엘스불림");
-
             _isClickHold = false;
 
         }
