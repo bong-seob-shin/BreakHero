@@ -21,7 +21,6 @@ public class CharcterController : MoveObject
     {
         _targetPos = transform.position;
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        this._width = this._width * 2;
         
     }
 
@@ -89,7 +88,8 @@ public class CharcterController : MoveObject
     {
         _targetPos = _camera.ScreenToWorldPoint(Input.mousePosition);
         
-        if(_targetPos.x>CameraResolution.screenLeftBottom.x&&_targetPos.x<CameraResolution.screenRightTop.x)
+        if(_targetPos.x>CameraResolution.screenLeftBottom.x+this._width/2
+           &&_targetPos.x<CameraResolution.screenRightTop.x-this._width/2)
             transform.position = new Vector3(_targetPos.x, -4.0f, 0);
     }
 
