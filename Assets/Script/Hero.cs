@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CharcterController : MoveObject
+public class Hero : MoveObject
 {
     [SerializeField]
     private Vector3 _targetPos;
@@ -21,7 +21,6 @@ public class CharcterController : MoveObject
     {
         _targetPos = transform.position;
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        //_height = _height * 1.5f;
     }
 
     // Update is called once per frame
@@ -69,7 +68,8 @@ public class CharcterController : MoveObject
             _targetPos = _camera.ScreenToWorldPoint(Input.GetTouch(0).position);
             if (AABBCollisionCheck(new Vector2(_targetPos.x, _targetPos.y)))
             {
-                Attack();
+                if(!_isClickHold)
+                    Attack();
                 _isClickHold = true;
 
             }

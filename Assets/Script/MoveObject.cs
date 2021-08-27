@@ -19,22 +19,25 @@ public class MoveObject : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         Vector2 spriteSize = _spriteRenderer.size;
-        _width = spriteSize.x;
-        _height = spriteSize.y;
+        _width = spriteSize.x*transform.localScale.x;
+        _height = spriteSize.y*transform.localScale.y;
+        
         collsionList.Add(this);
-       
+
     }
 
     protected virtual void Move()
     {
-        
     }
 
     protected virtual void Dead()
     {
-        
     }
 
+    protected virtual void CollsionCheck()
+    {
+        
+    }
     protected bool AABBCollisionCheck(Vector2 colPos)
     {
         float left = transform.position.x - _width / 2;
@@ -84,5 +87,10 @@ public class MoveObject : MonoBehaviour
             Destroy(collsionList[deleteIndex].gameObject);
             collsionList.RemoveAt(deleteIndex);
         }
+    }
+
+    protected void GetDamage(MoveObject mo)
+    {
+        this._HP -= mo._damage;
     }
 }
