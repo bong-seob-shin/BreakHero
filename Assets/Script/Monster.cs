@@ -53,7 +53,7 @@ public class Monster : MoveObject
                 if (AABBCollisionCheck(collsionList[i]))
                 {
                     GetDamage(collsionList[i]);
-                    
+                    transform.position += Vector3.up * 0.5f;
                     DestroyColObj(collsionList[i]);
                 }
             }
