@@ -2,31 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : MoveObject
+public class Satellite : Monster
 {
-    
-    // Update is called once per frame
-    protected virtual void Update()
-    {
-        Move();
-        if (CameraResolution.screenLeftBottom.y > transform.position.y||_HP<=0)
-        {
-            Dead();
-        }
+    public GameObject chaneObject;
 
-        CollsionCheck();
+    // Start is called before the first frame update
+    void Start()
+    {
+        _HP = 5;
+        _speed = 2.0f;
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        if ( chaneObject != null)
+        {
+            Move();
+            CollsionCheck();
+        }
+        else
+        {
+            base.Move();
+            base.CollsionCheck();
+        }
+        
+        if (CameraResolution.screenLeftBottom.y > transform.position.y||_HP<=0) //이부분 중복되어 사용하는데 정리가 애매함
+        {
+            base.Dead();
+        }
         drawCollisionBox();
     }
 
     protected override void Move()
     {
-        transform.position += Vector3.down*this._speed*Time.deltaTime;
-        
-    }
-
-    protected override void Dead()
-    {
-        DestroyColObj(this);
+        transform.position = new Vector3(transform.position.x,chaneObject.transform.position.y, transform.position.z );
     }
 
     protected override void CollsionCheck()
@@ -44,18 +54,12 @@ public class Monster : MoveObject
                 if (AABBCollisionCheck(collsionList[i]))
                 {
                     GetDamage(collsionList[i]);
-                    transform.position += Vector3.up * 0.5f;
+                    chaneObject.transform.position += Vector3.up * 0.5f;
                     DestroyColObj(collsionList[i]);
                 }
             }
 
-            if (collsionList[i].GetType() == typeof(Satellite)&&collsionList[i] != this)
-            {
-                if (AABBCollisionCheck(collsionList[i]))
-                {
-                    collsionList[i].transform.position += Vector3.up * 1f;
-                }
-            }
+           
         }
     }
 }

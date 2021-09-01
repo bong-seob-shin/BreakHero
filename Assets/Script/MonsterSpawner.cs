@@ -32,7 +32,7 @@ public class MonsterSpawner : MonoBehaviour
         {
             _currentSpawnTime = _spawnTime;
             int rand  = Random.Range(0, 2);
-            Instantiate(monster, _spawnPoint[rand], quaternion.identity);
+            Instantiate(monster, _spawnPoint[1], quaternion.identity);
         }
     }
 }

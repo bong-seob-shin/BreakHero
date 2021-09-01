@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7677396079108230885}
   - component: {fileID: 7677396079108230886}
-  - component: {fileID: 7677396079108230887}
+  - component: {fileID: -1462253314265860922}
   m_Layer: 0
   m_Name: meteor
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7677396079108230887
+--- !u!114 &-1462253314265860922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,6 +92,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7677396079108230880}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c34730594ed415743825479882c6ff2f, type: 3}
+  m_Script: {fileID: 11500000, guid: 027ff84aa61e8a64faf268eefd4eaa15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -23,8 +23,8 @@ public class MoveObject : MonoBehaviour
         _height = spriteSize.y*transform.localScale.y;
         
         collsionList.Add(this);
-
     }
+    
 
     protected virtual void Move()
     {
@@ -38,6 +38,8 @@ public class MoveObject : MonoBehaviour
     {
         
     }
+    
+    
     protected bool AABBCollisionCheck(Vector2 colPos)
     {
         float left = transform.position.x - _width / 2;
@@ -52,6 +54,25 @@ public class MoveObject : MonoBehaviour
         return true;
     }
 
+    protected void drawCollisionBox()
+    {
+        float left = transform.position.x - _width / 2;
+        float right = transform.position.x + _width / 2;
+        float top = transform.position.y + _height / 2;
+        float bottom = transform.position.y - _height / 2;
+        
+
+        Vector3 leftBottom = new Vector3(left,bottom,0);
+        Vector3 rightBottom = new Vector3(right,bottom,0);
+        Vector3 leftTop = new Vector3(left, top, 0);
+        Vector3 rightTop = new Vector3(right, top,0);
+        
+        Debug.DrawLine(leftBottom ,rightBottom,Color.green,0,false);
+        Debug.DrawLine(leftTop ,rightTop,Color.green,0,false);
+        Debug.DrawLine(leftBottom ,leftTop,Color.green,0,false);
+        Debug.DrawLine(rightBottom ,rightTop,Color.green,0,false);
+        
+    }
     protected bool AABBCollisionCheck(MoveObject colPos)
     {
         float left = transform.position.x - _width / 2;

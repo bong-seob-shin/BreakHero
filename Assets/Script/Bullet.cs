@@ -14,6 +14,7 @@ public class Bullet : MoveObject
     // Update is called once per frame
     void Update()
     {
+        drawCollisionBox();
         transform.position += Vector3.up * bulletspeed * Time.deltaTime;
         if (CameraResolution.screenRightTop.y < transform.position.y)
         {

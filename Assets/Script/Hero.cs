@@ -26,12 +26,8 @@ public class Hero : MoveObject
     // Update is called once per frame
     void Update()
     {
-
-
         ClickInput();
-
-
-
+        drawCollisionBox();
 
     }
 
