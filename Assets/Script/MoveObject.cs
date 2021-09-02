@@ -15,7 +15,7 @@ public class MoveObject : MonoBehaviour
     protected SpriteRenderer _spriteRenderer;
 
     public static List<MoveObject> collsionList = new List<MoveObject>();
-    private void Awake()
+    protected virtual void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         Vector2 spriteSize = _spriteRenderer.size;

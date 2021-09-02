@@ -9,10 +9,10 @@ public class Monster : MoveObject
     protected virtual void Update()
     {
         Move();
-        if (CameraResolution.screenLeftBottom.y > transform.position.y||_HP<=0)
-        {
+       
+        
+        if(_HP<=0)
             Dead();
-        }
 
         CollsionCheck();
         drawCollisionBox();

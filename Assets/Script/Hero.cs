@@ -35,17 +35,27 @@ public class Hero : MoveObject
 
 
     private InGameManager _igm;
+
+    public Animation weaponAnim;
     // Start is called before the first frame update
-    void Start()
+
+
+    protected override void Awake()
     {
+        base.Awake();
         if (_instance == null)
             _instance = this;
+    }
+
+    void Start()
+    {
+        
         
         _targetPos = transform.position;
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         _HP = 3;
-        _igm = InGameManager.Instance;
-        
+        _igm = GameObject.FindWithTag("InGameManager").GetComponent<InGameManager>();
+
     }
 
     // Update is called once per frame
@@ -67,7 +77,7 @@ public class Hero : MoveObject
     {
         if(_isClickHold) 
             Move();
-#if UNITY_EDITOR
+#if UNITY_EDITOR ||UNITY_STANDALONE_WIN
         if (Input.GetMouseButtonDown(0))
         {
             _targetPos = _camera.ScreenToWorldPoint(Input.mousePosition);
@@ -115,12 +125,13 @@ public class Hero : MoveObject
         
         if(_targetPos.x>CameraResolution.screenLeftBottom.x+this._width/2
            &&_targetPos.x<CameraResolution.screenRightTop.x-this._width/2)
-            transform.position = new Vector3(_targetPos.x, -4.0f, 0);
+            transform.position = new Vector3(_targetPos.x, -3.5f, 0);
     }
 
     void Attack()
     {
         Instantiate(bullet,transform.position+Vector3.up*0.7f,Quaternion.identity);
+        weaponAnim.Play();
     }
 
     public int GetHP()
@@ -140,7 +151,7 @@ public class Hero : MoveObject
                     DestroyColObj(collsionList[i]);
                     heart.SetActive(true);
                     _HP -= 1;
-                    Debug.Log(_HP);
+                    
                 }
             }
             else if (collsionList[i].GetType() == typeof(Jupiter))
@@ -149,7 +160,7 @@ public class Hero : MoveObject
                 {
                     heart.SetActive(true);
                     _HP -= 2;
-                    Debug.Log(_HP);
+                    
                 }
 
             }

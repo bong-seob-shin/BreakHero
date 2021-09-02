@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - InGameManager
   layers:
   - Default
   - TransparentFX
@@ -49,4 +50,7 @@ TagManager:
     locked: 0
   - name: character
     uniqueID: 2623754435
+    locked: 0
+  - name: weapon
+    uniqueID: 1216009005
     locked: 0

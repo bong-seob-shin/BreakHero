@@ -30,7 +30,8 @@ public class MonsterSpawner : MonoBehaviour
         _spawnPoint.Add(new Vector3(1.7f, 6.0f, 0));
         _isOperate = true;
         
-        _igm = InGameManager.Instance;
+        _igm = GameObject.FindWithTag("InGameManager").GetComponent<InGameManager>();
+
 
     }
 

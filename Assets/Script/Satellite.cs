@@ -5,12 +5,16 @@ using UnityEngine;
 public class Satellite : Monster
 {
     public GameObject chaneObject;
+    private EarthHeart _earthHeart;
 
     // Start is called before the first frame update
     void Start()
     {
         _HP = 5;
         _speed = 2.0f;
+        _damage = 1;
+        _earthHeart = EarthHeart.Instance;
+
     }
 
     // Update is called once per frame
@@ -27,10 +31,18 @@ public class Satellite : Monster
             base.CollsionCheck();
         }
         
-        if (CameraResolution.screenLeftBottom.y > transform.position.y||_HP<=0) //이부분 중복되어 사용하는데 정리가 애매함
+        
+        if (CameraResolution.screenLeftBottom.y+0.5f > transform.position.y)//이부분 중복되어 사용하는데 정리가 애매함
+        {
+            _earthHeart.Hit();
+            base.Dead();
+        }
+        
+        if (_HP<=0) //이부분 중복되어 사용하는데 정리가 애매함
         {
             base.Dead();
         }
+        
         drawCollisionBox();
     }
 

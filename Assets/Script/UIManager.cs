@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
@@ -32,7 +33,8 @@ public class UIManager : MonoBehaviour
         if (_instance == null)
             _instance = this;
 
-        _igm = InGameManager.Instance;
+        _igm = GameObject.FindWithTag("InGameManager").GetComponent<InGameManager>();
+
         
     }
 
@@ -66,11 +68,15 @@ public class UIManager : MonoBehaviour
 
     public void OnResumeButtonClick()
     {
-        //backGroundMenu.SetActive(false);
+        MoveObject.collsionList.Clear();
+
+        SceneManager.LoadScene(0);
     }
 
     public void OnStartButtonClick()
     {
+        Time.timeScale = 1;
+
         _igm.SetIsStart(true);
     }
 }
