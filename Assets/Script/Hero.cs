@@ -37,6 +37,8 @@ public class Hero : MoveObject
     private InGameManager _igm;
 
     public Animation weaponAnim;
+
+    private int comboPoint;
     // Start is called before the first frame update
 
 
@@ -55,7 +57,7 @@ public class Hero : MoveObject
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         _HP = 3;
         _igm = GameObject.FindWithTag("InGameManager").GetComponent<InGameManager>();
-
+        comboPoint = 0;
     }
 
     // Update is called once per frame
@@ -138,29 +140,46 @@ public class Hero : MoveObject
     {
         return _HP;
     }
+
+    public void PlusCombo()
+    {
+        comboPoint++;
+    }
+
+    public void ResetCombo()
+    {
+        comboPoint = 0;
+    }
+    public int GetCombo()
+    {
+        return comboPoint;
+    }
+    
     protected override void CollsionCheck()
     {
         for (int i = 0; i < collsionList.Count; i++)
         {
             if(collsionList[i].GetType() == typeof(Satellite)||
                 collsionList[i].GetType() == typeof(Meteor)||
-                collsionList[i].GetType() == typeof(Monster))
+                collsionList[i].GetType() == typeof(Monster)||
+                collsionList[i].GetType() == typeof(RingMonster))
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {
                     DestroyColObj(collsionList[i]);
                     heart.SetActive(true);
                     _HP -= 1;
-                    
+                    ResetCombo();
                 }
             }
-            else if (collsionList[i].GetType() == typeof(Jupiter))
+            else if (collsionList[i].GetType() == typeof(Jupiter)||
+                     collsionList[i].GetType() == typeof(Saturn))
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {
                     heart.SetActive(true);
                     _HP -= 2;
-                    
+                    ResetCombo();
                 }
 
             }

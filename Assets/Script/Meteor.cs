@@ -20,6 +20,7 @@ public class Meteor : Monster
         base.Update();
         if (CameraResolution.screenLeftBottom.y+0.5f > transform.position.y)
         {
+            _hero.ResetCombo();
             _earthHeart.Hit();
             Dead();
         }

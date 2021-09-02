@@ -10,12 +10,16 @@ public class Saturn : Monster
     private float _spawnTimer;
 
     public GameObject ringMonster;
+    private MonsterSpawner _monsterSpawner;
+
     // Start is called before the first frame update
     void Start()
     {
         _HP = 50;
         _speed = 0.1f;
         _spawnTimer = 3.0f;
+        _monsterSpawner = GameObject.FindWithTag("MonsterSpawner").GetComponent<MonsterSpawner>();
+
     }
 
     // Update is called once per frame
@@ -25,6 +29,8 @@ public class Saturn : Monster
         base.Move();
         if (CameraResolution.screenLeftBottom.y > transform.position.y||_HP<=0)
         {
+            _monsterSpawner.OnOperator();
+
             base.Dead();
         }
 
@@ -64,6 +70,7 @@ public class Saturn : Monster
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {
+                    _hero.PlusCombo();
                     GetDamage(collsionList[i]);
                     DestroyColObj(collsionList[i]);
                 }
@@ -83,7 +90,7 @@ public class Saturn : Monster
     void SpawnRingMonster()
     {
         int randPos = Random.Range(0, 3);
-        Instantiate(ringMonster, new Vector3(_spawnXPoints[randPos], transform.position.y - _height / 2 - 1.0f, 0),
+        Instantiate(ringMonster, new Vector3(_spawnXPoints[randPos], transform.position.y - _height / 2.0f, 0),
             Quaternion.identity);
 
     }

@@ -29,6 +29,7 @@ public class RingMonster : Monster
                 Dead();
             if (CameraResolution.screenLeftBottom.y + 0.5f > transform.position.y)
             {
+                _hero.ResetCombo();
                 _earthHeart.Hit();
                 Dead();
             }
@@ -51,6 +52,7 @@ public class RingMonster : Monster
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {
+                    _hero.PlusCombo();
                     GetDamage(collsionList[i]);
                     DestroyColObj(collsionList[i]);
                 }

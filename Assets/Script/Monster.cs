@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Monster : MoveObject
 {
-    
+    protected Hero _hero;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _hero = Hero.Instance;
+    }
+
     // Update is called once per frame
     protected virtual void Update()
     {
@@ -40,6 +47,7 @@ public class Monster : MoveObject
                 if (AABBCollisionCheck(collsionList[i]))
                 {
                     GetDamage(collsionList[i]);
+                    _hero.PlusCombo();
                     transform.position += Vector3.up * 0.5f;
                     DestroyColObj(collsionList[i]);
                 }

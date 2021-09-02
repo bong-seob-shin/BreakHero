@@ -14,9 +14,11 @@ public class MonsterSpawner : MonoBehaviour
     public GameObject[] monster;
 
     public GameObject jupiter;
+    public GameObject saturn;
 
     private int _monsterWave;
 
+    [SerializeField]
     private bool _isOperate;
 
     private InGameManager _igm;
@@ -45,7 +47,7 @@ public class MonsterSpawner : MonoBehaviour
             {
                 _currentSpawnTime -= Time.deltaTime;
 
-                if (_currentSpawnTime < 0 && _monsterWave < 10)
+                if (_currentSpawnTime < 0)
                 {
                     _currentSpawnTime = _spawnTime;
                     int rand = 1;
@@ -65,13 +67,28 @@ public class MonsterSpawner : MonoBehaviour
                     Instantiate(monster[monsterType], _spawnPoint[rand], quaternion.identity);
                     _monsterWave++;
                 }
+            }
+            if (_monsterWave == 10)
+            {
+                Instantiate(jupiter, new Vector3(0.0f, 12.0f, 0.0f), quaternion.identity);
+                _monsterWave++;
+                _isOperate = false;
+            }
 
-                if (_monsterWave >= 10)
-                {
-                    Instantiate(jupiter, new Vector3(0.0f, 12.0f, 0.0f), quaternion.identity);
-                    _isOperate = false;
-                }
+            if (_monsterWave == 20)
+            {
+                Instantiate(saturn, new Vector3(0.0f, 8.0f, 0.0f), quaternion.identity);
+                _monsterWave++;
+                _isOperate = false;
             }
         }
+    }
+
+
+    public void OnOperator()
+    {
+        _isOperate = true;
+        _currentSpawnTime = _spawnTime;
+
     }
 }

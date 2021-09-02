@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+using Button = UnityEngine.UIElements.Button;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,8 +26,9 @@ public class UIManager : MonoBehaviour
     
     public Button menuButton;
     public GameObject backGroundMenu;
-    
-    
+    public Text ComboText;
+
+    private Hero _hero;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,14 +36,15 @@ public class UIManager : MonoBehaviour
             _instance = this;
 
         _igm = GameObject.FindWithTag("InGameManager").GetComponent<InGameManager>();
-
+        _hero= Hero.Instance;
         
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        ComboText.text = _hero.GetCombo().ToString() + "  Combo!!";
     }
 
     public void OnMenuButtonClick()

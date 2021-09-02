@@ -34,6 +34,7 @@ public class Satellite : Monster
         
         if (CameraResolution.screenLeftBottom.y+0.5f > transform.position.y)//이부분 중복되어 사용하는데 정리가 애매함
         {
+            _hero.ResetCombo();
             _earthHeart.Hit();
             base.Dead();
         }
@@ -62,6 +63,7 @@ public class Satellite : Monster
                 if (AABBCollisionCheck(collsionList[i]))
                 {
                     GetDamage(collsionList[i]);
+                    _hero.PlusCombo();
                     chaneObject.transform.position += Vector3.up * 0.5f;
                     DestroyColObj(collsionList[i]);
                 }

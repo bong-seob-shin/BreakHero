@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Jupiter : Monster
 {
+    private MonsterSpawner _monsterSpawner;
     // Start is called before the first frame update
     void Start()
     {
         _HP = 50;
         _speed = 4.0f;
+        _monsterSpawner = GameObject.FindWithTag("MonsterSpawner").GetComponent<MonsterSpawner>();
+
     }
 
     // Update is called once per frame
@@ -17,6 +20,7 @@ public class Jupiter : Monster
         base.Move();
         if (CameraResolution.screenLeftBottom.y > transform.position.y||_HP<=0)
         {
+            _monsterSpawner.OnOperator();
             base.Dead();
         }
         drawCollisionBox();
@@ -47,6 +51,7 @@ public class Jupiter : Monster
                 if (AABBCollisionCheck(collsionList[i]))
                 {
                     GetDamage(collsionList[i]);
+                    _hero.PlusCombo();
                     transform.position += Vector3.up * 0.5f;
                     DestroyColObj(collsionList[i]);
                 }
