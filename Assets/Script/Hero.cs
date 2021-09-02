@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,22 @@ using UnityEngine.UIElements;
 
 public class Hero : MoveObject
 {
-    [SerializeField]
+    private static Hero _instance = null;
+    
+    public static Hero Instance
+    {
+        get
+        {
+            if(_instance == null)
+            {
+                return null;
+            }
+
+            return _instance;
+        }
+   
+    }
+
     private Vector3 _targetPos;
     
     private Camera _camera;
@@ -15,20 +31,29 @@ public class Hero : MoveObject
     
     public GameObject bullet;
 
+    public GameObject heart;
     
     // Start is called before the first frame update
     void Start()
     {
+        if (_instance == null)
+            _instance = this;
+        
         _targetPos = transform.position;
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        _HP = 3;
     }
 
     // Update is called once per frame
     void Update()
     {
         ClickInput();
+        CollsionCheck();
         drawCollisionBox();
-
+        if (_HP <= 0)
+        {
+            Dead();
+        }
     }
 
     void ClickInput()
@@ -89,5 +114,31 @@ public class Hero : MoveObject
     void Attack()
     {
         Instantiate(bullet,transform.position,Quaternion.identity);
+    }
+
+    public int GetHP()
+    {
+        return _HP;
+    }
+    protected override void CollsionCheck()
+    {
+        for (int i = 0; i < collsionList.Count; i++)
+        {
+            
+            if (collsionList[i].GetType() == typeof(Satellite)||collsionList[i].GetType() == typeof(Meteor)||collsionList[i].GetType() == typeof(Jupiter)&&collsionList[i] != this)
+            {
+                if (AABBCollisionCheck(collsionList[i]))
+                {
+                    heart.SetActive(true);
+                    _HP -= 1;
+                    Debug.Log(_HP);
+                }
+            }
+        }
+    }
+
+    protected override void Dead()
+    {
+        Destroy(gameObject);
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class MoveObject : MonoBehaviour
 {
-    protected float _HP;
+    protected int _HP;
     protected float _speed;
-    protected float _damage;
+    protected int _damage;
     protected float _width;
     protected float _height;
 

@@ -49,7 +49,9 @@ public class Monster : MoveObject
                 }
             }
 
-            if (collsionList[i].GetType() == typeof(Satellite)&&collsionList[i] != this)
+            if ((collsionList[i].GetType() == typeof(Satellite)||collsionList[i].GetType() == typeof(Monster)
+                                                               ||collsionList[i].GetType() == typeof(Meteor)
+                                                               ||collsionList[i].GetType() == typeof(Jupiter)) && collsionList[i] != this)
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {

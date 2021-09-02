@@ -11,7 +11,11 @@ public class MonsterSpawner : MonoBehaviour
 
     private List<Vector3> _spawnPoint = new List<Vector3>();
 
-    public GameObject monster;
+    public GameObject[] monster;
+
+    public GameObject jupiter;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -31,8 +35,14 @@ public class MonsterSpawner : MonoBehaviour
         if (_currentSpawnTime < 0)
         {
             _currentSpawnTime = _spawnTime;
-            int rand  = Random.Range(0, 2);
-            Instantiate(monster, _spawnPoint[1], quaternion.identity);
+            int rand  = 1;
+
+            int monsterType = Random.Range(0, 2);
+            if (monsterType == 0)
+            {
+                rand  = Random.Range(0, 2);
+            }
+            Instantiate(monster[monsterType], _spawnPoint[rand], quaternion.identity);
         }
     }
 }
