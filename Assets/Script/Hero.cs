@@ -120,7 +120,7 @@ public class Hero : MoveObject
 
     void Attack()
     {
-        Instantiate(bullet,transform.position,Quaternion.identity);
+        Instantiate(bullet,transform.position+Vector3.up*0.7f,Quaternion.identity);
     }
 
     public int GetHP()
