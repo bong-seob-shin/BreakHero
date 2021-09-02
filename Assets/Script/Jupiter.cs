@@ -56,7 +56,8 @@ public class Jupiter : Monster
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {
-                    collsionList[i].transform.position += Vector3.up * 1f;
+                    if(collsionList[i].transform.position.y>transform.position.y)
+                        collsionList[i].transform.position += Vector3.up * 1f;
                 }
             }
         }

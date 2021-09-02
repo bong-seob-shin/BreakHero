@@ -14,35 +14,48 @@ public class MonsterSpawner : MonoBehaviour
     public GameObject[] monster;
 
     public GameObject jupiter;
-    
-    
+
+    private int _monsterWave;
+
+    private bool _isOperate;
     // Start is called before the first frame update
     void Start()
     {
         _spawnTime = 3;
         _currentSpawnTime = _spawnTime;
-        _spawnPoint.Add(new Vector3(-1.7f, 4.0f, 0));
-        _spawnPoint.Add(new Vector3(0.0f, 4.0f, 0));
-        _spawnPoint.Add(new Vector3(1.7f, 4.0f, 0));
-
+        _spawnPoint.Add(new Vector3(-1.7f, 6.0f, 0));
+        _spawnPoint.Add(new Vector3(0.0f, 6.0f, 0));
+        _spawnPoint.Add(new Vector3(1.7f, 6.0f, 0));
+        _isOperate = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _currentSpawnTime -= Time.deltaTime;
-
-        if (_currentSpawnTime < 0)
+        if (_isOperate)
         {
-            _currentSpawnTime = _spawnTime;
-            int rand  = 1;
+            _currentSpawnTime -= Time.deltaTime;
 
-            int monsterType = Random.Range(0, 2);
-            if (monsterType == 0)
+            if (_currentSpawnTime < 0 && _monsterWave < 10)
             {
-                rand  = Random.Range(0, 2);
+                _currentSpawnTime = _spawnTime;
+                int rand = 1;
+
+                int monsterType = Random.Range(0, 100);
+                if (monsterType <70)
+                {
+                    rand = Random.Range(0, 2);
+                }
+
+                Instantiate(monster[monsterType], _spawnPoint[rand], quaternion.identity);
+                _monsterWave++;
             }
-            Instantiate(monster[monsterType], _spawnPoint[rand], quaternion.identity);
+
+            if (_monsterWave >= 10)
+            {
+                Instantiate(jupiter, new Vector3(0.0f, 12.0f, 0.0f), quaternion.identity);
+                _isOperate = false;
+            }
         }
     }
 }

@@ -114,4 +114,6 @@ public class MoveObject : MonoBehaviour
     {
         this._HP -= mo._damage;
     }
+    
+    
 }

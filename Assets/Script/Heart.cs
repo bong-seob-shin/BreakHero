@@ -8,7 +8,7 @@ public class Heart : MonoBehaviour
     private float _disappearTime;
 
     private Hero myHero;
-
+    private int maxHp = 3;
     public GameObject[] onHearts;
     // Start is called before the first frame update
     void Start()
@@ -31,9 +31,15 @@ public class Heart : MonoBehaviour
         int heroHp = myHero.GetHP();
 
 
-        if (onHearts[heroHp].activeSelf)
+        for (int i = 0; i < maxHp; i++)
         {
-            onHearts[heroHp].SetActive(false);
+            if (i >= heroHp)
+            {
+                if (onHearts[i].activeSelf)
+                {
+                    onHearts[i].SetActive(false);
+                }
+            }
         }
     }
 

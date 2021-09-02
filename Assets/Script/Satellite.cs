@@ -43,11 +43,7 @@ public class Satellite : Monster
     {
         for (int i = 0; i < collsionList.Count; i++)
         {
-            if (collsionList[i].GetType() == typeof(Hero))
-            {
-                if (AABBCollisionCheck(collsionList[i]))
-                    Dead();
-            }
+          
             
             if (collsionList[i].GetType() == typeof(Bullet))
             {
@@ -65,7 +61,8 @@ public class Satellite : Monster
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {
-                    collsionList[i].transform.position += Vector3.up * 1f;
+                    if(collsionList[i].transform.position.y>transform.position.y)
+                        collsionList[i].transform.position += Vector3.up * 1f;
                 }
             }
         }

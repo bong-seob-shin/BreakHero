@@ -124,15 +124,27 @@ public class Hero : MoveObject
     {
         for (int i = 0; i < collsionList.Count; i++)
         {
-            
-            if (collsionList[i].GetType() == typeof(Satellite)||collsionList[i].GetType() == typeof(Meteor)||collsionList[i].GetType() == typeof(Jupiter)&&collsionList[i] != this)
+            if(collsionList[i].GetType() == typeof(Satellite)||
+                collsionList[i].GetType() == typeof(Meteor)||
+                collsionList[i].GetType() == typeof(Monster))
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {
+                    DestroyColObj(collsionList[i]);
                     heart.SetActive(true);
                     _HP -= 1;
                     Debug.Log(_HP);
                 }
+            }
+            else if (collsionList[i].GetType() == typeof(Jupiter))
+            {
+                if (AABBCollisionCheck(collsionList[i]))
+                {
+                    heart.SetActive(true);
+                    _HP -= 2;
+                    Debug.Log(_HP);
+                }
+
             }
         }
     }
