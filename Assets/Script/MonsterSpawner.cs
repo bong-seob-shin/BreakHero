@@ -54,7 +54,7 @@ public class MonsterSpawner : MonoBehaviour
                     int monsterType = 0;
                     if (monsterRand < 70)
                     {
-                        rand = Random.Range(0, 2);
+                        rand = Random.Range(0, 3);
                         monsterType = 0;
                     }
                     else
