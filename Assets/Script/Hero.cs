@@ -32,7 +32,9 @@ public class Hero : MoveObject
     public GameObject bullet;
 
     public GameObject heart;
-    
+
+
+    private InGameManager _igm;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,17 +44,22 @@ public class Hero : MoveObject
         _targetPos = transform.position;
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         _HP = 3;
+        _igm = InGameManager.Instance;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        ClickInput();
-        CollsionCheck();
-        drawCollisionBox();
-        if (_HP <= 0)
+        if (_igm.GetIsStart())
         {
-            Dead();
+            ClickInput();
+            CollsionCheck();
+            drawCollisionBox();
+            if (_HP <= 0)
+            {
+                Dead();
+            }
         }
     }
 
