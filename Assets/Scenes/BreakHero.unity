@@ -1502,6 +1502,7 @@ MonoBehaviour:
   - {fileID: 8328851418957152685, guid: 8c61c973e9bb476488169064e2f8a02c, type: 3}
   jupiter: {fileID: 5424475126573232866, guid: 3c4d600ed2d62a3479a93a54e405680d, type: 3}
   saturn: {fileID: 6499305706729985524, guid: 637a10260ebb9aa40b6b0a0a57ef3f52, type: 3}
+  sun: {fileID: 6499305706729985524, guid: 6f2dc22b258b16045b4c5e50e6202d34, type: 3}
   _isOperate: 0
 --- !u!4 &1131847565
 Transform:

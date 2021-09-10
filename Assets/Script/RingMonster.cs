@@ -26,12 +26,12 @@ public class RingMonster : Monster
             base.Move();
             base.CollsionCheck();
             if(_HP<=0)
-                Dead();
+                base.Dead();
             if (CameraResolution.screenLeftBottom.y + 0.5f > transform.position.y)
             {
                 _hero.ResetCombo();
                 _earthHeart.Hit();
-                Dead();
+                base.Dead();
             }
         }
         else
@@ -60,7 +60,7 @@ public class RingMonster : Monster
 
             if ((collsionList[i].GetType() == typeof(Satellite)||collsionList[i].GetType() == typeof(Monster)
                                                                ||collsionList[i].GetType() == typeof(Meteor)
-                                                               ||collsionList[i].GetType() == typeof(Jupiter))&&collsionList[i] != this)
+                                                               ||collsionList[i].GetType() == typeof(Saturn))&&collsionList[i] != this)
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {

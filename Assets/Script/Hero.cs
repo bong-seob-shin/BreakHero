@@ -162,7 +162,8 @@ public class Hero : MoveObject
             if(collsionList[i].GetType() == typeof(Satellite)||
                 collsionList[i].GetType() == typeof(Meteor)||
                 collsionList[i].GetType() == typeof(Monster)||
-                collsionList[i].GetType() == typeof(RingMonster))
+                collsionList[i].GetType() == typeof(RingMonster)||
+                collsionList[i].GetType() == typeof(FlareMonster))
             {
                 if (AABBCollisionCheck(collsionList[i]))
                 {

@@ -15,6 +15,7 @@ public class MonsterSpawner : MonoBehaviour
 
     public GameObject jupiter;
     public GameObject saturn;
+    public GameObject sun;
 
     private int _monsterWave;
 
@@ -78,6 +79,13 @@ public class MonsterSpawner : MonoBehaviour
             if (_monsterWave == 20)
             {
                 Instantiate(saturn, new Vector3(0.0f, 8.0f, 0.0f), quaternion.identity);
+                _monsterWave++;
+                _isOperate = false;
+            }
+            
+            if (_monsterWave == 1)
+            {
+                Instantiate(sun, new Vector3(0.0f, 8.0f, 0.0f), quaternion.identity);
                 _monsterWave++;
                 _isOperate = false;
             }
