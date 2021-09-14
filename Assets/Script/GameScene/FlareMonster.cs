@@ -35,7 +35,8 @@ public class FlareMonster : Monster
             _earthHeart.Hit();
             base.Dead();
         }
-            
+        drawCollisionBox();
+
     }
 
     protected override void Move()

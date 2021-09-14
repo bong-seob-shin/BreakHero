@@ -73,13 +73,9 @@ public class UIManager : MonoBehaviour
     {
         MoveObject.collsionList.Clear();
 
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 
-    public void OnStartButtonClick()
-    {
-        Time.timeScale = 1;
-
-        _igm.SetIsStart(true);
-    }
+  
 }

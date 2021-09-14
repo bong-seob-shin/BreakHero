@@ -18,7 +18,7 @@ public class InGameManager : MonoBehaviour
         if (_instance == null)
             _instance = this;
 
-        _isStart = false;
+        _isStart = true;
         _hero = Hero.Instance;
         _earthHeart = EarthHeart.Instance;
     }
