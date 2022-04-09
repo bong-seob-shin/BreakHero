@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InGameManager
   - MonsterSpawner
+  - SoundManager
   layers:
   - Default
   - TransparentFX

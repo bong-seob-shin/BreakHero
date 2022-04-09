@@ -9,7 +9,6 @@ public class InGameManager : MonoBehaviour
     private static InGameManager _instance = null;
 
     private Hero _hero;
-    private EarthHeart _earthHeart;
   
     private bool _isStart;
     // Start is called before the first frame update
@@ -20,17 +19,11 @@ public class InGameManager : MonoBehaviour
 
         _isStart = true;
         _hero = Hero.Instance;
-        _earthHeart = EarthHeart.Instance;
     }
 
     private void Update()
     {
-        if (_hero.GetHP() <= 0 || _earthHeart.GetHP() <= 0)
-        {
-            MoveObject.collsionList.Clear();
-            
-            SceneManager.LoadScene(0);
-        }
+     
     }
 
     public bool GetIsStart()

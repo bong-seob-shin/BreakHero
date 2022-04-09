@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.IK;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class Hero : MoveObject
 {
@@ -31,17 +33,40 @@ public class Hero : MoveObject
     
     public GameObject bullet;
 
+    public Sprite[] bulletSprite ;
+    
     public GameObject heart;
 
-
+    
     private InGameManager _igm;
 
-    public Animation weaponAnim;
+    private long _weaponType;
+    private long _petType;
+    public GameObject[] weapons;
+    public Animation[] weaponAnims;
 
-    private int comboPoint;
+    
+    public GameObject[] heroSkins;
+
+    private long comboPoint;
+
+    private long maxComboPoint;
     // Start is called before the first frame update
 
+    private IKManager2D _ikManger;
 
+    public LimbSolver2D[] leftSolver;
+    public LimbSolver2D[] rightSolver;
+
+    private GameDataBaseManager _gameDataBaseManager;
+
+    public GameObject[] pets;
+    
+    private float _petTimer;
+    private Vector3[] _petSpawnPos = {new Vector3(-1.7f, -5f, 0), new Vector3(0, -5f, 0), new Vector3(1.7f, -5f, 0)};
+
+
+    public GameObject auraEffect;
     protected override void Awake()
     {
         base.Awake();
@@ -57,7 +82,25 @@ public class Hero : MoveObject
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         _HP = 3;
         _igm = GameObject.FindWithTag("InGameManager").GetComponent<InGameManager>();
+        _soundManager = GameObject.FindWithTag("SoundManager").GetComponent<SoundManager>();
+
+        _gameDataBaseManager = GameDataBaseManager.Instance;
+        
         comboPoint = 0;
+        maxComboPoint = 0;
+        _petTimer = 6.0f;
+        _width = _width * 1.5f;
+        _ikManger = GetComponent<IKManager2D>();
+
+        _weaponType = _gameDataBaseManager._gamePlayData.GetWeaponType();
+        _petType = _gameDataBaseManager._gamePlayData.GetPetType() - 1; // pet이 없을 경우를 포함하여 인덱싱 하기 위하여 -1을 함 -1이 펫이 없을 경우 
+        
+        
+        weapons[_weaponType].SetActive(true);
+        heroSkins[_gameDataBaseManager._gamePlayData.GetSkinType()].SetActive(true);
+        _ikManger.solvers[0] = leftSolver[_weaponType];
+        _ikManger.solvers[1] = rightSolver[_weaponType];
+
     }
 
     // Update is called once per frame
@@ -67,10 +110,39 @@ public class Hero : MoveObject
         {
             ClickInput();
             CollsionCheck();
+#if UNITY_EDITOR
             drawCollisionBox();
+#endif
             if (_HP <= 0)
             {
                 Dead();
+            }
+
+            if (_petType >= 0)
+            {
+                if (_petTimer < 0)
+                {
+                    int rand = Random.Range(0, 3);
+                    ObjectPool.SpawnPoolObj(pets[_petType].name, _petSpawnPos[rand], Quaternion.identity);
+                    _petTimer = 3.0f;
+                }
+                else
+                {
+                    _petTimer -= Time.deltaTime;
+                }
+            }
+
+            if (comboPoint >= 30)
+            {
+                if(!auraEffect.activeSelf)
+                    auraEffect.SetActive(true);
+            }
+            else
+            {
+                if(auraEffect.activeSelf)
+                    auraEffect.SetActive(false);
+
+
             }
         }
     }
@@ -132,8 +204,11 @@ public class Hero : MoveObject
 
     void Attack()
     {
-        Instantiate(bullet,transform.position+Vector3.up*0.7f,Quaternion.identity);
-        weaponAnim.Play();
+        var spawnBullet =ObjectPool.SpawnPoolObj("Bullet", transform.position + Vector3.up * 0.7f, Quaternion.identity);
+        spawnBullet.GetComponent<Bullet>().bulletSprite = bulletSprite[_weaponType];
+
+        _soundManager.PlaySFXOnce(0, 0.3f);
+        weaponAnims[_weaponType].Play();
     }
 
     public int GetHP()
@@ -148,9 +223,16 @@ public class Hero : MoveObject
 
     public void ResetCombo()
     {
+        if(maxComboPoint<comboPoint)
+            maxComboPoint = comboPoint;
         comboPoint = 0;
     }
-    public int GetCombo()
+    
+    public long GetMaxCombo()
+    {
+        return maxComboPoint;
+    }
+    public long GetCombo()
     {
         return comboPoint;
     }
@@ -169,6 +251,8 @@ public class Hero : MoveObject
                 {
                     DestroyColObj(collsionList[i]);
                     heart.SetActive(true);
+                    _soundManager.PlaySFXOnce(2, 0.3f);
+
                     _HP -= 1;
                     ResetCombo();
                 }
@@ -189,6 +273,6 @@ public class Hero : MoveObject
 
     protected override void Dead()
     {
-        Destroy(gameObject);
+       gameObject.SetActive(false);
     }
 }

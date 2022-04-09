@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "788183556454",
+    "firebase_url": "https://breakhero-b6657-default-rtdb.firebaseio.com",
+    "project_id": "breakhero-b6657",
+    "storage_bucket": "breakhero-b6657.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788183556454:android:8fd40deb9ffc8df967e8a7",
+        "android_client_info": {
+          "package_name": "com.Bong.BreakHero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788183556454-q1togsbkiths9molvr5ofa2aic1r2kte.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM3K5vKyEE_hrlbxC2FS5cy5Rm4qPgSVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788183556454-q1togsbkiths9molvr5ofa2aic1r2kte.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

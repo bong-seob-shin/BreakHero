@@ -11,6 +11,7 @@ public class EarthHeart : MonoBehaviour
     private static EarthHeart _instance;
     public GameObject[] onHearts;
     private int maxHp = 3;
+    private SoundManager _soundManager;
 
     public static EarthHeart Instance
     {
@@ -35,9 +36,14 @@ public class EarthHeart : MonoBehaviour
         
         _disappearTime = 0f;
 
+
         
     }
 
+    private void Start()
+    {
+        _soundManager = GameObject.FindWithTag("SoundManager").GetComponent<SoundManager>();
+    }
 
     private void Update()
     {
@@ -53,8 +59,10 @@ public class EarthHeart : MonoBehaviour
     {
         gameObject.SetActive(true);
         _disappearTime = 1.5f;
+        _soundManager.PlaySFXOnce(2, 0.3f);
 
-        maxHp -= 1;
+        if(maxHp>0)
+            maxHp -= 1;
         onHearts[maxHp].SetActive(false);
         
     }

@@ -11,6 +11,7 @@ public class MoveObject : MonoBehaviour
     protected float _width;
     protected float _height;
 
+    protected SoundManager _soundManager;
     
     protected SpriteRenderer _spriteRenderer;
 
@@ -22,10 +23,13 @@ public class MoveObject : MonoBehaviour
         _width = spriteSize.x*transform.localScale.x;
         _height = spriteSize.y*transform.localScale.y;
         
-        collsionList.Add(this);
+        
     }
     
-
+    protected virtual void OnEnable()
+    {
+        collsionList.Add(this);
+    }
     protected virtual void Move()
     {
     }
@@ -89,9 +93,11 @@ public class MoveObject : MonoBehaviour
             return false;
         if (colBottom > top || colTop < bottom)
             return false;
+        if (!colPos.gameObject.activeSelf || !gameObject.activeSelf)
+            return false;
         return true;
     }
-    protected void DestroyColObj(MoveObject mo)
+    protected  void DestroyColObj(MoveObject mo)
     {
         int deleteIndex = -1;
         for (int i = 0; i < collsionList.Count; i++)
@@ -105,8 +111,11 @@ public class MoveObject : MonoBehaviour
 
         if (deleteIndex > -1)
         {
-            Destroy(collsionList[deleteIndex].gameObject);
+            //Destroy(collsionList[deleteIndex].gameObject);
+
+            collsionList[deleteIndex].gameObject.SetActive(false);
             collsionList.RemoveAt(deleteIndex);
+
         }
     }
 

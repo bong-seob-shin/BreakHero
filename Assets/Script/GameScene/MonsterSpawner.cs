@@ -23,6 +23,7 @@ public class MonsterSpawner : MonoBehaviour
     private bool _isOperate;
 
     private InGameManager _igm;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,16 +57,25 @@ public class MonsterSpawner : MonoBehaviour
                     int monsterRand = Random.Range(0, 100);
                     int monsterType = 0;
                     if (monsterRand < 70)
-                    {
+                    { 
                         rand = Random.Range(0, 3);
                         monsterType = 0;
+                        ObjectPool.SpawnPoolObj(monster[monsterType].name, _spawnPoint[rand], quaternion.identity);
+
                     }
                     else
                     {
                         monsterType = 1;
+                        var leftWing= ObjectPool.SpawnPoolObj(monster[monsterType].transform.GetChild(0).name, _spawnPoint[0], quaternion.identity);
+                        var body =ObjectPool.SpawnPoolObj(monster[monsterType].transform.GetChild(1).name, _spawnPoint[1], quaternion.identity);
+                        var rightWing =ObjectPool.SpawnPoolObj(monster[monsterType].transform.GetChild(2).name, _spawnPoint[2], quaternion.identity);
+
+                        leftWing.GetComponent<Satellite>().chaneObject = body;
+                        rightWing.GetComponent<Satellite>().chaneObject = body;
+                        body.GetComponent<Satellite>().chaneObject = null;
+
                     }
 
-                    Instantiate(monster[monsterType], _spawnPoint[rand], quaternion.identity);
                     _monsterWave++;
                 }
             }
@@ -83,7 +93,7 @@ public class MonsterSpawner : MonoBehaviour
                 _isOperate = false;
             }
             
-            if (_monsterWave == 1)
+            if (_monsterWave == 30)
             {
                 Instantiate(sun, new Vector3(0.0f, 8.0f, 0.0f), quaternion.identity);
                 _monsterWave++;
@@ -98,5 +108,10 @@ public class MonsterSpawner : MonoBehaviour
         _isOperate = true;
         _currentSpawnTime = _spawnTime;
 
+    }
+
+    public void OffOperator()
+    {
+        _isOperate = false;
     }
 }
