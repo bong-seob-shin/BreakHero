@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Heart : MonoBehaviour
 {
+    private const float CoolDown = 1.5f;
     private float _disappearTime;
 
     private Hero myHero;
@@ -24,7 +25,7 @@ public class Heart : MonoBehaviour
 
         if (_disappearTime < 0)
         {
-            _disappearTime = 1.5f;
+            _disappearTime = CoolDown;
             gameObject.SetActive(false);
         }
 
@@ -45,6 +46,6 @@ public class Heart : MonoBehaviour
 
     private void OnEnable()
     {
-        _disappearTime = 1.5f;
+        _disappearTime = CoolDown;
     }
 }

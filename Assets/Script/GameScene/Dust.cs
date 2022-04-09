@@ -6,11 +6,12 @@ using UnityEngine;
 public class Dust : MonoBehaviour
 {
     private float disableTime;
+    private const float CoolDown = 0.5f;
     // Start is called before the first frame update
 
     private void Start()
     {
-        disableTime = 0.5f;
+        disableTime = CoolDown;
     }
 
     // Update is called once per frame
@@ -19,7 +20,7 @@ public class Dust : MonoBehaviour
         disableTime -= Time.deltaTime;
         if (disableTime < 0)
         {
-            disableTime = 0.5f;
+            disableTime = CoolDown;
             gameObject.SetActive(false);
         }
     }

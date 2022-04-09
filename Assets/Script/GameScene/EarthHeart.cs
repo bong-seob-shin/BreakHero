@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EarthHeart : MonoBehaviour
 {
-    
+    private const float CoolDown = 1.5f;
     private float _disappearTime;
 
     private static EarthHeart _instance;
@@ -58,7 +58,7 @@ public class EarthHeart : MonoBehaviour
     public void Hit()
     {
         gameObject.SetActive(true);
-        _disappearTime = 1.5f;
+        _disappearTime = CoolDown;
         _soundManager.PlaySFXOnce(2, 0.3f);
 
         if(maxHp>0)

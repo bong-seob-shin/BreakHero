@@ -6,7 +6,14 @@ using Random = UnityEngine.Random;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    private float _spawnTime;
+    private const float MonsterRightXPosition = 1.7f;
+    private const float MonsterYPosition = 6.0f;
+    private const float JupiterYPosition = 12.0f;
+    private const float SaturnYPosition = 8.0f;
+    private const float SunYPosition = 8.0f;
+
+
+    private const float SpawnTime =3.0f;
     private float _currentSpawnTime;
 
     private List<Vector3> _spawnPoint = new List<Vector3>();
@@ -27,11 +34,11 @@ public class MonsterSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _spawnTime = 3;
-        _currentSpawnTime = _spawnTime;
-        _spawnPoint.Add(new Vector3(-1.7f, 6.0f, 0));
+        
+        _currentSpawnTime = SpawnTime;
+        _spawnPoint.Add(new Vector3(-MonsterRightXPosition, MonsterYPosition, 0));
         _spawnPoint.Add(new Vector3(0.0f, 6.0f, 0));
-        _spawnPoint.Add(new Vector3(1.7f, 6.0f, 0));
+        _spawnPoint.Add(new Vector3(MonsterRightXPosition, MonsterYPosition, 0));
         _isOperate = true;
         
         _igm = GameObject.FindWithTag("InGameManager").GetComponent<InGameManager>();
@@ -51,7 +58,7 @@ public class MonsterSpawner : MonoBehaviour
 
                 if (_currentSpawnTime < 0)
                 {
-                    _currentSpawnTime = _spawnTime;
+                    _currentSpawnTime = SpawnTime;
                     int rand = 1;
 
                     int monsterRand = Random.Range(0, 100);
@@ -81,21 +88,21 @@ public class MonsterSpawner : MonoBehaviour
             }
             if (_monsterWave == 10)
             {
-                Instantiate(jupiter, new Vector3(0.0f, 12.0f, 0.0f), quaternion.identity);
+                Instantiate(jupiter, new Vector3(0.0f, JupiterYPosition, 0.0f), quaternion.identity);
                 _monsterWave++;
                 _isOperate = false;
             }
 
             if (_monsterWave == 20)
             {
-                Instantiate(saturn, new Vector3(0.0f, 8.0f, 0.0f), quaternion.identity);
+                Instantiate(saturn, new Vector3(0.0f, SaturnYPosition, 0.0f), quaternion.identity);
                 _monsterWave++;
                 _isOperate = false;
             }
             
             if (_monsterWave == 30)
             {
-                Instantiate(sun, new Vector3(0.0f, 8.0f, 0.0f), quaternion.identity);
+                Instantiate(sun, new Vector3(0.0f, SunYPosition, 0.0f), quaternion.identity);
                 _monsterWave++;
                 _isOperate = false;
             }
@@ -106,7 +113,7 @@ public class MonsterSpawner : MonoBehaviour
     public void OnOperator()
     {
         _isOperate = true;
-        _currentSpawnTime = _spawnTime;
+        _currentSpawnTime = SpawnTime;
 
     }
 

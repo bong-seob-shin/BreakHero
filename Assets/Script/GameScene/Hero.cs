@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class Hero : MoveObject
 {
     private static Hero _instance = null;
-    
+   
     public static Hero Instance
     {
         get
@@ -24,10 +24,15 @@ public class Hero : MoveObject
    
     }
 
+    private const float PetRightSideXPosition = 1.7f;
+    private const float PetYPosition = -5f;
+    private const float PetAttackCoolDown = 3f;
+    private const float PlayerMultipleRatio = 1.5f;
+    private const float PlayerYPosition = -3.5f;
+
     private Vector3 _targetPos;
     
     private Camera _camera;
-
 
     private bool _isClickHold;
     
@@ -63,7 +68,7 @@ public class Hero : MoveObject
     public GameObject[] pets;
     
     private float _petTimer;
-    private Vector3[] _petSpawnPos = {new Vector3(-1.7f, -5f, 0), new Vector3(0, -5f, 0), new Vector3(1.7f, -5f, 0)};
+    private Vector3[] _petSpawnPos = {new Vector3(-PetRightSideXPosition, PetYPosition, 0), new Vector3(0, PetYPosition, 0), new Vector3(PetRightSideXPosition, PetYPosition, 0)};
 
 
     public GameObject auraEffect;
@@ -89,7 +94,7 @@ public class Hero : MoveObject
         comboPoint = 0;
         maxComboPoint = 0;
         _petTimer = 6.0f;
-        _width = _width * 1.5f;
+        _width = _width * PlayerMultipleRatio;
         _ikManger = GetComponent<IKManager2D>();
 
         _weaponType = _gameDataBaseManager._gamePlayData.GetWeaponType();
@@ -124,7 +129,7 @@ public class Hero : MoveObject
                 {
                     int rand = Random.Range(0, 3);
                     ObjectPool.SpawnPoolObj(pets[_petType].name, _petSpawnPos[rand], Quaternion.identity);
-                    _petTimer = 3.0f;
+                    _petTimer = PetAttackCoolDown;
                 }
                 else
                 {
@@ -199,7 +204,7 @@ public class Hero : MoveObject
         
         if(_targetPos.x>CameraResolution.screenLeftBottom.x+this._width/2
            &&_targetPos.x<CameraResolution.screenRightTop.x-this._width/2)
-            transform.position = new Vector3(_targetPos.x, -3.5f, 0);
+            transform.position = new Vector3(_targetPos.x, PlayerYPosition, 0);
     }
 
     void Attack()

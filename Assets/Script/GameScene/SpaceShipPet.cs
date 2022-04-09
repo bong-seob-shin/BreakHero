@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SpaceShipPet : MoveObject
 {
-    private float _bulletspeed = 1.0f;
-
-    private float increaseHeight = -0.5f;
+    private const float SpaceShipMoveRangeToRight = 1.7f;
+    private const float Bulletspeed = 1.0f;
+    private const float IncreaseHeight = -0.5f;
 
     private int _horizontalDir = 1;
     
@@ -31,12 +31,12 @@ public class SpaceShipPet : MoveObject
 
     protected override void Move()
     {
-        if(transform.position.y < increaseHeight)
-            transform.position += Vector3.up * _bulletspeed*2 * Time.deltaTime;
+        if(transform.position.y < IncreaseHeight)
+            transform.position += Vector3.up * Bulletspeed*2 * Time.deltaTime;
         else
         {
-            transform.position += Vector3.right *_horizontalDir*_bulletspeed/2.0f * Time.deltaTime;
-            if (transform.position.x > 1.7f||transform.position.x < -1.7f)
+            transform.position += Vector3.right *_horizontalDir * Bulletspeed/2.0f * Time.deltaTime;
+            if (transform.position.x > SpaceShipMoveRangeToRight||transform.position.x < -SpaceShipMoveRangeToRight)
             {
                 _horizontalDir *= -1;
             }

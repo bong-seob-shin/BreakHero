@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MisslePet : MoveObject
 {
-    private float bulletspeed = 4.0f;
-
+    private const float bulletspeed = 4.0f;
+    private const float SearchCoolDown = 0.5f;
 
     private Vector3 _moveDir;
     private float _serchTimer; 
@@ -26,7 +26,7 @@ public class MisslePet : MoveObject
         if (_serchTimer < 0)
         {
             SearchTarget();
-            _serchTimer = 0.5f;
+            _serchTimer = SearchCoolDown;
         }
 
         Move();
