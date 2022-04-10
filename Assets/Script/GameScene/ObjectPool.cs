@@ -112,10 +112,7 @@ public class ObjectPool : MonoBehaviour
         {
             return null;
         }
-
-        Queue<GameObject> poolObjQueue = _instance._poolDictionary[tag];
-
-        if (poolObjQueue.Count <= 0)
+        if (_instance._poolDictionary[tag].Count <= 0)
         {
             PoolObject pool = _instance.SearchPoolObj(tag);
 
@@ -123,9 +120,8 @@ public class ObjectPool : MonoBehaviour
             {
                 var obj = _instance.CreatePoolObj(pool.objName,pool.go);
             }
-            
         }
-        GameObject poolGo = poolObjQueue.Dequeue();
+        GameObject poolGo = _instance._poolDictionary[tag].Dequeue();
         poolGo.transform.position = position;
         poolGo.transform.rotation = rotation;
         poolGo.SetActive(true);
