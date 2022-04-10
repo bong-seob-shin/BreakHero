@@ -30,14 +30,13 @@ public class MoveObject : MonoBehaviour
     {
         collsionList.Add(this);
     }
+    
     protected virtual void Move()
     {
     }
-
     protected virtual void Dead()
     {
     }
-
     protected virtual void CollsionCheck()
     {
         
@@ -54,6 +53,26 @@ public class MoveObject : MonoBehaviour
         if (colPos.x < left || colPos.x > right)
             return false;
         if (colPos.y < bottom || colPos.y > top)
+            return false;
+        return true;
+    }
+    protected bool AABBCollisionCheck(MoveObject colPos)
+    {
+        float left = transform.position.x - _width / 2;
+        float right = transform.position.x + _width / 2;
+        float top = transform.position.y + _height / 2;
+        float bottom = transform.position.y - _height / 2;
+
+        float colLeft = colPos.transform.position.x - colPos._width / 2;
+        float colRight = colPos.transform.position.x + colPos._width / 2;
+        float colTop =   colPos.transform.position.y + colPos._height / 2;
+        float colBottom =colPos.transform.position.y - colPos._height / 2;
+
+        if (colLeft > right || colRight < left)
+            return false;
+        if (colBottom > top || colTop < bottom)
+            return false;
+        if (!colPos.gameObject.activeSelf || !gameObject.activeSelf)
             return false;
         return true;
     }
@@ -76,26 +95,6 @@ public class MoveObject : MonoBehaviour
         Debug.DrawLine(leftBottom ,leftTop,Color.green,0,false);
         Debug.DrawLine(rightBottom ,rightTop,Color.green,0,false);
         
-    }
-    protected bool AABBCollisionCheck(MoveObject colPos)
-    {
-        float left = transform.position.x - _width / 2;
-        float right = transform.position.x + _width / 2;
-        float top = transform.position.y + _height / 2;
-        float bottom = transform.position.y - _height / 2;
-
-        float colLeft = colPos.transform.position.x - colPos._width / 2;
-        float colRight = colPos.transform.position.x + colPos._width / 2;
-        float colTop =   colPos.transform.position.y + colPos._height / 2;
-        float colBottom =colPos.transform.position.y - colPos._height / 2;
-
-        if (colLeft > right || colRight < left)
-            return false;
-        if (colBottom > top || colTop < bottom)
-            return false;
-        if (!colPos.gameObject.activeSelf || !gameObject.activeSelf)
-            return false;
-        return true;
     }
     protected  void DestroyColObj(MoveObject mo)
     {

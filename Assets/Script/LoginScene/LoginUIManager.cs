@@ -55,8 +55,6 @@ public class LoginUIManager : MonoBehaviour
                 _isJoinButtonClicked = false;
                 _authManager.InitIsJoin();
                 _authManager.CheckLogIn();
-
-
             }
         }
 
